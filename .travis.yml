@@ -1,4 +1,4 @@
 dist: bionic
 install:
-  - sudo apt install awscli -y
+  - sudo apt update && sudo apt install awscli -y
   - aws --version
