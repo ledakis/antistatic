@@ -1,0 +1,4 @@
+dist: bionic
+install:
+  - apt install awscli
+  - aws --version
