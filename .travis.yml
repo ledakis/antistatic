@@ -2,13 +2,12 @@ dist: bionic
 install:
   - sudo apt update && sudo apt install awscli zip wget tree -y
   - aws --version
-  - wget https://releases.hashicorp.com/terraform/0.12.19/terraform_0.12.19_linux_amd64.zip -O tf.zip
-  - unzip -f -o tf.zip && sudo mv terraform /usr/bin/ && rm tf.zip
+  - pushd $(mktemp  -d) && wget https://releases.hashicorp.com/terraform/0.12.19/terraform_0.12.19_linux_amd64.zip -O tf.zip && unzip tf.zip && sudo mv terraform /usr/bin/ && rm tf.zip && popd
 script:
   - tree 
-  # - sed "s@__BUCKET__@$BUCKET@g" -i terraform/backend.tfvars
-  # - sed "s@__BUCKETPATH__@$BUCKETPATH@g" -i terraform/backend.tfvars
-  # - pushd terraform/
-  # - terraform init -backend-config=backend.tfvars
-  # - popd
+  - sed "s@__BUCKET__@$BUCKET@g" -i terraform/backend.tfvars
+  - sed "s@__BUCKETPATH__@$BUCKETPATH@g" -i terraform/backend.tfvars
+  - pushd terraform/
+  - terraform init -backend-config=backend.tfvars
+  - popd
   - exit 0
